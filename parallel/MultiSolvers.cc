@@ -532,6 +532,45 @@ void MultiSolvers::printFinalStats() {
         printf("|\n");
     }
 
+  //
+    printf("c |---------------|-----------------");
+    for(int i = 0; i < solvers.size(); i++)
+        printf("|------------");
+    printf("|\n");
+
+    printf("c | lt-cl-avg-sz  ");
+    double num = 0;
+
+    for(int i = 0; i < solvers.size(); i++) {
+        num += (double)solvers[i]->stats[num_clauses_literals]/(double)solvers[i]->stats[num_clauses_learnt];
+    }
+    printf("| %13lf   ", num / (double)solvers.size());
+
+    for(int i = 0; i < solvers.size(); i++) {
+        printf("| %10lf ", (double)solvers[i]->stats[num_clauses_literals]/(double)solvers[i]->stats[num_clauses_learnt]);
+    }
+
+    printf("|\n");
+
+  //
+    printf("c |---------------|-----------------");
+    for(int i = 0; i < solvers.size(); i++)
+        printf("|------------");
+    printf("|\n");
+
+    printf("c | total-props   ");
+    num = 0;
+
+    for(int i = 0; i < solvers.size(); i++) {
+        num += solvers[i]->stats[cl_tried_propagating]/(double)(1000*1000);
+    }
+    printf("| %13.1lf M ", (double)num / (double)solvers.size());
+
+    for(int i = 0; i < solvers.size(); i++) {
+        printf("| %10.1lfM", (double)solvers[i]->stats[cl_tried_propagating]/(double)(1000*1000));
+    }
+
+    printf("|\n");
 
 //--
 

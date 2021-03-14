@@ -87,10 +87,13 @@ enum CoreStats {
   learnts_literals,
   max_literals,
   tot_literals,
-  noDecisionConflict
+  noDecisionConflict,
+  num_clauses_learnt,
+  num_clauses_literals,
+  cl_tried_propagating
 } ;
 
-#define coreStatsSize 24
+#define coreStatsSize 27
 //=================================================================================================
 // Solver -- the main class:
 

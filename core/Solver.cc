@@ -1043,6 +1043,7 @@ CRef Solver::propagate() {
         // First, Propagate binary clauses
         vec <Watcher> &wbin = watchesBin[p];
         for(int k = 0; k < wbin.size(); k++) {
+            stats[cl_tried_propagating]++;
 
             Lit imp = wbin[k].blocker;
 
@@ -1057,6 +1058,7 @@ CRef Solver::propagate() {
 
         // Now propagate other 2-watched clauses
         for(i = j = (Watcher *) ws, end = i + ws.size(); i != end;) {
+            stats[cl_tried_propagating]++;
             // Try to avoid inspecting the clause:
             Lit blocker = i->blocker;
             if(value(blocker) == l_True) {
@@ -1531,6 +1533,8 @@ lbool Solver::search(int nof_conflicts) {
             selectors.clear();
 
             analyze(confl, learnt_clause, selectors, backtrack_level, nblevels, szWithoutSelectors);
+            stats[num_clauses_learnt]++;
+            stats[num_clauses_literals]+=learnt_clause.size();
 
             lbdQueue.push(nblevels);
             sumLBD += nblevels;
